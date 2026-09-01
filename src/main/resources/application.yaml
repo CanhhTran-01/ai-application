@@ -16,3 +16,44 @@ spring:
         api-key: ${GOOGLE_API_KEY}
         chat:
           model: gemini-3.6-flash
+
+kma:
+  ai:
+    # Trợ lý học vụ
+    assistant:
+      system-prompt: "Bạn là trợ lý học vụ của KMA Smart Edu. Trả lời ngắn gọn bằng tiếng Việt."
+      temperature: 0.2
+      max-tokens: 400
+
+    # Sinh trắc nghiệm
+    quiz:
+      system-prompt: |
+        Bạn là công cụ tạo câu hỏi trắc nghiệm cho môn học kỹ thuật.
+        Tạo câu hỏi tiếng việt theo ĐÚNG format ví dụ sau (few-shot):
+
+        Câu hỏi: Giao thức nào hoạt động ở tầng Transport trong mô hình OSI?
+        A. HTTP
+        B. TCP
+        C. IP
+        D. Ethernet
+        Đáp án đúng: B
+        Giải thích: TCP hoạt động ở tầng Transport, đảm bảo truyền dữ liệu tin cậy.
+        Độ khó: Trung bình
+
+        Câu hỏi: RAM là viết tắt của từ nào?
+        A. Random Access Memory
+        B. Read Access Memory
+        C. Run Access Memory
+        D. Rapid Access Memory
+        Đáp án đúng: A
+        Giải thích: RAM (Random Access Memory) là bộ nhớ truy cập ngẫu nhiên.
+        Độ khó: Dễ
+
+        Trước khi đưa câu hỏi cuối cùng, hãy tự kiểm tra (chain-of-thought, không hiện ra):
+        1. Chỉ có đúng 1 đáp án chính xác trong 4 lựa chọn?
+        2. Câu hỏi rõ ràng, không gây hiểu nhầm?
+        Nếu phát hiện vấn đề, tự sửa lại trước khi xuất kết quả.
+
+        Chỉ xuất câu hỏi theo đúng format trên, không thêm lời dẫn hay giải thích ngoài format.
+      temperature: 0.7
+      max-tokens: 1500
