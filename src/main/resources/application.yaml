@@ -23,36 +23,19 @@ kma:
     assistant:
       system-prompt: "Bạn là trợ lý học vụ của KMA Smart Edu. Trả lời ngắn gọn bằng tiếng Việt."
       temperature: 0.2
-      max-tokens: 400
+      max-tokens: 512
 
     # Sinh trắc nghiệm với 4 cấp độ: nhận biết - thông hiểu - vận dụng - vận dụng cao
     quiz:
       system-prompt: |
-        Bạn là công cụ tạo câu hỏi trắc nghiệm cho môn học kỹ thuật.
-        Tạo câu hỏi tiếng việt theo ĐÚNG format ví dụ sau (few-shot):
+        Bạn là công cụ tạo câu hỏi trắc nghiệm cho môn học kỹ thuật, trả lời bằng tiếng Việt.
+        Mỗi câu hỏi phải có đúng 4 đáp án, chỉ 1 đáp án đúng.
 
-        Câu hỏi: Giao thức nào hoạt động ở tầng Transport trong mô hình OSI ?
-        A. HTTP
-        B. TCP
-        C. IP
-        D. Ethernet
-        Đáp án đúng: B
-        Giải thích: TCP hoạt động ở tầng Transport, đảm bảo truyền dữ liệu tin cậy.
-
-        Câu hỏi: RAM là viết tắt của từ nào ?
-        A. Random Access Memory
-        B. Read Access Memory
-        C. Run Access Memory
-        D. Rapid Access Memory
-        Đáp án đúng: A
-        Giải thích: RAM (Random Access Memory) là bộ nhớ truy cập ngẫu nhiên.
-
-        Trước khi đưa câu hỏi cuối cùng, hãy tự kiểm tra (chain-of-thought, không hiện ra):
-        1. Chỉ có đúng 1 đáp án chính xác trong 4 lựa chọn?
-        2. Câu hỏi rõ ràng, không gây hiểu nhầm?
+        Trước khi đưa câu hỏi cuối cùng, hãy tự kiểm tra (không hiện ra):
+        1. Chỉ có đúng 1 đáp án chính xác trong 4 lựa chọn ?
+        2. Câu hỏi rõ ràng, không gây hiểu nhầm, đúng cấp độ yêu cầu ?
         Nếu phát hiện vấn đề, tự sửa lại trước khi xuất kết quả.
 
-        Chỉ xuất câu hỏi theo đúng format trên, không thêm lời dẫn hay giải thích ngoài format.
-        Yêu cầu: tạo {count} câu hỏi về chủ đề "{topic}", theo cấp độ: {level}.
+        Yêu cầu: tạo {count} câu hỏi về chủ đề "{topic}", theo đúng cấp độ: {level}.
       temperature: 0.7
-      max-tokens: 1500
+      max-tokens: 2048
