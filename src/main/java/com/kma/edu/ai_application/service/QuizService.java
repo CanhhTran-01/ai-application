@@ -2,6 +2,7 @@ package com.kma.edu.ai_application.service;
 
 import com.kma.edu.ai_application.dto.QuizList;
 import com.kma.edu.ai_application.enums.QuestionLevel;
+import com.kma.edu.ai_application.exception.AiGenerationException;
 import com.kma.edu.ai_application.exception.AppException;
 import com.kma.edu.ai_application.exception.ErrorCode;
 import com.kma.edu.ai_application.properties.AiProperties;
@@ -28,7 +29,7 @@ public class QuizService {
     }
 
     @Retryable(
-            retryFor = {AppException.class},
+            retryFor = {AiGenerationException.class},
             backoff = @Backoff(delay = 1000, multiplier = 2) // 1s, 2s, 4s...
             )
     public QuizList generate(String topic, int count, QuestionLevel level) {
@@ -49,26 +50,26 @@ public class QuizService {
             // exception thật bị wrapped, cần lấy truy xuống cause lấy exception gốc
             Throwable rootCause = getRootCause(exception);
 
-            // lỗi JSON schema
+            // lỗi JSON schema - có retry
             if (rootCause instanceof JacksonException) {
                 log.warn("AI output invalid | type=JSON | action=retry | cause={}", rootCause.getMessage());
-                throw new AppException(ErrorCode.AI_INVALID_OUTPUT_FORMAT);
+                throw new AiGenerationException(ErrorCode.AI_INVALID_OUTPUT_FORMAT);
             }
 
-            // JSON fields Validation
+            // JSON fields Validation - có retry
             if (rootCause instanceof IllegalArgumentException) {
                 log.warn("AI output invalid | type=validation | action=retry | cause={}", rootCause.getMessage());
-                throw new AppException(ErrorCode.AI_INVALID_OUTPUT_FORMAT);
+                throw new AiGenerationException(ErrorCode.AI_INVALID_OUTPUT_FORMAT);
             }
 
-            // fallback
+            // fallback - không retry
             log.error("AI generation failed | action=fallback | cause={}", exception.getMessage());
             throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
         }
     }
 
     @Recover // fallback khi retry hết maxAttempts, ném exception cho AiExceptionHanlder xử lý
-    public QuizList fallback(AppException exception, String topic, int count, QuestionLevel level) {
+    public QuizList fallback(AiGenerationException exception, String topic, int count, QuestionLevel level) {
         log.error("AI generation failed after max retries | fallback=true | cause={}", exception.getMessage());
         throw new AppException(ErrorCode.AI_SERVICE_UNAVAILABLE);
     }
