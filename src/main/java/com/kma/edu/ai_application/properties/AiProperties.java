@@ -20,6 +20,8 @@ public class AiProperties {
         private String systemPrompt;
         private double temperature;
         private int maxTokens;
+        private double similarityThreshold;
+        private int topK;
     }
 
     @Getter

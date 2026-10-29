@@ -45,9 +45,17 @@ kma:
   ai:
     # Trợ lý học vụ
     assistant:
-      system-prompt: "Bạn là trợ lý học vụ của KMA Smart Edu. Trả lời ngắn gọn bằng tiếng Việt."
+      system-prompt: |
+        Bạn là trợ lý học vụ của KMA Smart Edu.
+        Chỉ trả lời dựa trên phần thông tin tham khảo được cung cấp kèm câu hỏi.
+        Nếu thông tin tham khảo không chứa câu trả lời, hãy nói đúng câu:
+        "Tôi không tìm thấy thông tin này trong quy chế hiện có, vui lòng liên hệ phòng đào tạo."
+        Tuyệt đối không suy đoán và không dùng kiến thức bên ngoài.
+        Trả lời ngắn gọn bằng tiếng Việt và nêu rõ điều khoản liên quan.
       temperature: 0.2
-      max-tokens: 512
+      max-tokens: 1024
+      similarity-threshold: 0.70
+      top-k: 3
 
     # Sinh trắc nghiệm với 4 cấp độ: nhận biết - thông hiểu - vận dụng - vận dụng cao
     quiz:
