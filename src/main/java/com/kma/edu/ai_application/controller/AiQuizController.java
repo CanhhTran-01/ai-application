@@ -3,7 +3,7 @@ package com.kma.edu.ai_application.controller;
 import com.kma.edu.ai_application.dto.ApiResponse;
 import com.kma.edu.ai_application.dto.QuizList;
 import com.kma.edu.ai_application.enums.QuestionLevel;
-import com.kma.edu.ai_application.service.QuizService;
+import com.kma.edu.ai_application.service.QuizFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AiQuizController {
 
-    private final QuizService quizService;
+    private final QuizFacade quizFacade;
 
     @GetMapping("/quiz-generate")
     public ResponseEntity<ApiResponse<QuizList>> generate(
@@ -24,7 +24,7 @@ public class AiQuizController {
             @RequestParam(defaultValue = "3") int count,
             @RequestParam(defaultValue = "RECOGNITION") QuestionLevel level) {
 
-        QuizList result = quizService.generate(topic, count, level);
+        QuizList result = quizFacade.generate(topic, count, level);
         return ResponseEntity.ok(ApiResponse.success(result));
     }
 }

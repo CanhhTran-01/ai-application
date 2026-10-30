@@ -18,6 +18,8 @@ public enum ErrorCode {
     STUDENT_NOT_FOUND(7003, "Không tìm thấy thông tin sinh viên", HttpStatus.NOT_FOUND),
     STUDENT_ACCESS_DENIED(7004, "Bạn không có quyền truy cập thông tin sinh viên này", HttpStatus.FORBIDDEN),
 
+    QUIZ_SOURCE_NOT_FOUND(8005, "Không tìm thấy nguồn dữ liệu câu hỏi trắc nghiệm", HttpStatus.NOT_FOUND),
+
     // --- AI ERRORS ---
     AI_SERVICE_UNAVAILABLE(8001, "Dịch vụ AI hiện không phản hồi", HttpStatus.SERVICE_UNAVAILABLE),
     AI_GENERATION_FAILED(8002, "AI không thể tạo ra kết quả phù hợp", HttpStatus.INTERNAL_SERVER_ERROR),

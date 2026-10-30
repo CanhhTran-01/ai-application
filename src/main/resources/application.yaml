@@ -71,6 +71,13 @@ kma:
         2. Câu hỏi rõ ràng, không gây hiểu nhầm, đúng cấp độ yêu cầu ?
         Nếu phát hiện vấn đề, tự sửa lại trước khi xuất kết quả.
 
-        Yêu cầu: tạo {count} câu hỏi về chủ đề "{topic}", theo đúng cấp độ: {level}.
+        Yêu cầu: 
+        Tạo {count} câu hỏi về chủ đề "{topic}", theo đúng cấp độ: {level}.
+        Chỉ được dùng nội dung trong phần TÀI LIỆU dưới đây để ra câu hỏi, đáp án và giải thích. Không dùng kiến thức bên ngoài.
+        Nếu tài liệu không đủ để ra {count} câu thì ra ít hơn, tuyệt đối không bịa.
+        TÀI LIỆU:
+        {context}.
       temperature: 0.7
       max-tokens: 2048
+      top-k: 5
+      similarity-threshold: 0.65

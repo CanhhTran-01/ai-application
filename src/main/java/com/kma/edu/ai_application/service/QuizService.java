@@ -32,11 +32,13 @@ public class QuizService {
             retryFor = {AiGenerationException.class},
             backoff = @Backoff(delay = 1000, multiplier = 2) // 1s, 2s, 4s...
             )
-    public QuizList generate(String topic, int count, QuestionLevel level) {
+    public QuizList generate(String topic, int count, QuestionLevel level, String context) {
 
         try {
             PromptTemplate template = new PromptTemplate(aiProperties.getQuiz().getSystemPrompt());
-            String renderedPrompt = template.render(Map.of("count", count, "topic", topic, "level", level.getLevel()));
+
+            String renderedPrompt = template.render(
+                    Map.of("count", count, "topic", topic, "level", level.getLevel(), "context", context));
 
             return chatClient
                     .prompt()
@@ -69,7 +71,8 @@ public class QuizService {
     }
 
     @Recover // fallback khi retry hết maxAttempts, ném exception cho AiExceptionHanlder xử lý
-    public QuizList fallback(AiGenerationException exception, String topic, int count, QuestionLevel level) {
+    public QuizList fallback(
+            AiGenerationException exception, String topic, int count, QuestionLevel level, String context) {
         log.error("AI generation failed after max retries | fallback=true | cause={}", exception.getMessage());
         throw new AppException(ErrorCode.AI_SERVICE_UNAVAILABLE);
     }
