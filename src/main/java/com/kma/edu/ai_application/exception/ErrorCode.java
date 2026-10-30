@@ -12,6 +12,12 @@ public enum ErrorCode {
     UNCATEGORIZED_EXCEPTION(9999, "Lỗi hệ thống không xác định", HttpStatus.INTERNAL_SERVER_ERROR),
     MISSING_PARAMETER(100000, "Thiếu tham số bắt buộc", HttpStatus.BAD_REQUEST),
 
+    // --- STUDENT ERRORS ---
+    STUDENT_CONTEXT_MISSING(7001, "Thiếu thông tin sinh viên trong ngữ cảnh", HttpStatus.INTERNAL_SERVER_ERROR),
+    STUDENT_CONTEXT_INVALID(7002, "Thông tin sinh viên trong ngữ cảnh không hợp lệ", HttpStatus.INTERNAL_SERVER_ERROR),
+    STUDENT_NOT_FOUND(7003, "Không tìm thấy thông tin sinh viên", HttpStatus.NOT_FOUND),
+    STUDENT_ACCESS_DENIED(7004, "Bạn không có quyền truy cập thông tin sinh viên này", HttpStatus.FORBIDDEN),
+
     // --- AI ERRORS ---
     AI_SERVICE_UNAVAILABLE(8001, "Dịch vụ AI hiện không phản hồi", HttpStatus.SERVICE_UNAVAILABLE),
     AI_GENERATION_FAILED(8002, "AI không thể tạo ra kết quả phù hợp", HttpStatus.INTERNAL_SERVER_ERROR),
