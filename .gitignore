@@ -13,6 +13,7 @@ src/main/resources/application-prod.yaml
 
 ### Info ###
 docs/
+roadmap/
 
 ### STS ###
 .apt_generated
